@@ -45,19 +45,20 @@ export function getPopularMovies () {
 
   /***
    * Creating resultant array with expected fields and format
+   * releaseYear can be extracted from releaseDate using format() method from moment library
    */
   var resultsArray = []
   for(let movie of combinedResults){
     var movieObj = {}
     movieObj["image"] = movie.image
-    movieObj["releaseYear"] = moment(movie.releaseDate).format('YYYY')//.toString("yyyy")
+    movieObj["releaseYear"] = moment(movie.releaseDate).format('YYYY')
     movieObj["title"] = movie.title
     movieObj["price"] = movie.price
     resultsArray.push(movieObj)
   }
 
   //console.log(resultsArray)
-  
+
   return {
     type: 'GET_MOVIES_SUCCESS',
     movies: resultsArray

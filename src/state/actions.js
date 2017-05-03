@@ -20,30 +20,6 @@ export function getPopularMovies () {
   var combinedResults = movies[0].concat(movies[1])
 
   /***
-   * Sort first by year and then by title
-   */
-  combinedResults.sort(function(a, b) {
-
-    var compareDate = 0
-    var compareTitle = 0
-    if((a.releaseDate > b.releaseDate) )
-      compareDate = -1
-    else {
-      if((a.releaseDate < b.releaseDate))
-        compareDate = 1
-    }
-
-    if((a.title < b.title) )
-      compareTitle = -1
-    else {
-      if((a.title > b.title))
-        compareTitle = 1
-    }
-    return compareDate || compareTitle
-  });
-
-
-  /***
    * Creating resultant array with expected fields and format
    * releaseYear can be extracted from releaseDate using format() method from moment library
    */
@@ -57,7 +33,29 @@ export function getPopularMovies () {
     resultsArray.push(movieObj)
   }
 
-  //console.log(resultsArray)
+  /***
+   * Sort first by year and then by title
+   */
+  resultsArray.sort(function(a, b) {
+
+    var compareYear = 0
+    var compareTitle = 0
+    if((a.releaseYear > b.releaseYear) )
+      compareYear = -1
+    else {
+      if((a.releaseYear < b.releaseYear))
+        compareYear = 1
+    }
+
+    if((a.title < b.title) )
+      compareTitle = -1
+    else {
+      if((a.title > b.title))
+        compareTitle = 1
+    }
+
+    return compareYear || compareTitle
+  });
 
   return {
     type: 'GET_MOVIES_SUCCESS',

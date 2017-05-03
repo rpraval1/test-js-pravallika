@@ -14,12 +14,52 @@ export function getPopularMovies () {
   //    this is used in src/components/movies-list.js line 25
   //
 
-  const combinedResults = []
+  /***
+   * Combine two array into one using concat function
+   */
+  var combinedResults = movies[0].concat(movies[1])
 
+  /***
+   * Sort first by year and then by title
+   */
+  combinedResults.sort(function(a, b) {
+
+    var compareDate = 0
+    var compareTitle = 0
+    if((a.releaseDate > b.releaseDate) )
+      compareDate = -1
+    else {
+      if((a.releaseDate < b.releaseDate))
+        compareDate = 1
+    }
+
+    if((a.title < b.title) )
+      compareTitle = -1
+    else {
+      if((a.title > b.title))
+        compareTitle = 1
+    }
+    return compareDate || compareTitle
+  });
+
+
+  /***
+   * Creating resultant array with expected fields and format
+   */
+  var resultsArray = []
+  for(let movie of combinedResults){
+    var movieObj = {}
+    movieObj["image"] = movie.image
+    movieObj["releaseYear"] = moment(movie.releaseDate).format('YYYY')//.toString("yyyy")
+    movieObj["title"] = movie.title
+    movieObj["price"] = movie.price
+    resultsArray.push(movieObj)
+  }
+
+  //console.log(resultsArray)
+  
   return {
     type: 'GET_MOVIES_SUCCESS',
-    movies: combinedResults
+    movies: resultsArray
   }
 }
-
-
